@@ -1,0 +1,13 @@
+.gradle/
+build/
+.loom/
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+out/
+bin/
+run/
+.gemini/
+.agents/

@@ -1,0 +1,97 @@
+plugins {
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'java'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+
+    // ── Fabric ──
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+
+    // ── Cobblemon & Architectury ──
+    maven {
+        name = 'ImpactDev'
+        url = 'https://maven.impactdev.net/repository/development/'
+    }
+    maven {
+        name = 'Architectury'
+        url = 'https://maven.architectury.dev/'
+    }
+
+    // ── PlaceholderAPI (Bukkit - disponible en Arclight en runtime) ──
+    maven {
+        name = 'PlaceholderAPI'
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    // ── Spigot API (Bukkit - disponible en Arclight en runtime) ──
+    maven {
+        name = 'Spigot'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+
+    // ── Sonatype (dependencias transitivas de Spigot) ──
+    maven {
+        name = 'Sonatype'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    // ── Minecraft + Fabric ──
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // ── Cobblemon API (solo compilación, presente en runtime vía Arclight) ──
+    modCompileOnly("com.cobblemon:fabric:${project.cobblemon_version}") {
+        transitive = false
+    }
+
+    // ── Architectury API (requerido por Cobblemon internamente) ──
+    modCompileOnly "dev.architectury:architectury-fabric:${project.architectury_version}"
+
+    // ── PlaceholderAPI (presente en runtime como plugin Bukkit en Arclight) ──
+    compileOnly "me.clip:placeholderapi:${project.papi_version}"
+
+    // ── Spigot API (presente en runtime vía Arclight) ──
+    compileOnly "org.spigotmc:spigot-api:${project.spigot_version}"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${project.archives_base_name}" }
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblemon-bridge",
+  "version": "${version}",
+  "name": "CobblemonBridge",
+  "description": "Puente entre Cobblemon y PlaceholderAPI para servidores Arclight. Expone Pokédex, Party y estadísticas de combate como placeholders PAPI.",
+  "authors": [
+    "CobblePlay"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/cobblemon-bridge/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "com.cobbleplay.bridge.CobblemonBridgeMod"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "cobblemon": ">=1.6.0",
+    "minecraft": "1.21.1",
+    "java": ">=21"
+  },
+  "suggests": {
+    "architectury": ">=13.0.0"
+  }
+}
