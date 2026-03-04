@@ -1,0 +1,26 @@
+name: CobblemonMasterBridge
+version: '${version}'
+main: dev.cobblemonbridge.CobblemonMasterBridge
+api-version: "1.21"
+description: "PlaceholderAPI expansion bridging Cobblemon data to any PAPI-compatible plugin on Arclight 1.21.1"
+authors: [ CobblemonBridgeDev ]
+
+# PlaceholderAPI MUST be present — it is our core dependency.
+depend:
+  - PlaceholderAPI
+
+# Cobblemon SHOULD be present. We gracefully skip registration if it isn't.
+softdepend:
+  - Cobblemon
+
+# Ensure we load AFTER both so their APIs are fully available.
+load: POSTWORLD
+
+# Force BattlePass to load after this bridge
+loadbefore:
+  - BattlePass
+
+commands:
+  cobblebridge:
+    description: "Main command for CobblemonMasterBridge tools."
+    usage: "/cobblebridge <subcommand>"

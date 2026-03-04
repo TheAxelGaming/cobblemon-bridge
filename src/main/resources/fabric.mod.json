@@ -1,0 +1,19 @@
+{
+    "schemaVersion": 1,
+    "id": "cobblemonmasterbridge_mod",
+    "version": "1.0.0",
+    "name": "Cobblemon Master Bridge (Mod)",
+    "description": "Hybrid Fabric side for CobblemonMasterBridge exposing native Kotlin functions to Bukkit.",
+    "authors": [
+        "Elite Bridge"
+    ],
+    "contact": {},
+    "license": "MIT",
+    "environment": "*",
+    "entrypoints": {},
+    "depends": {
+        "fabricloader": ">=0.14.0",
+        "minecraft": ">=1.21.0",
+        "cobblemon": "*"
+    }
+}

@@ -1,0 +1,25 @@
+# CobblemonMasterBridge — Configuration
+# All user-facing strings and behaviours can be customised here.
+
+messages:
+  # Returned when a party slot index has no Pokémon in it.
+  empty-slot: "Empty Slot"
+  # Returned when a species identifier is not found in Cobblemon's registry.
+  invalid-species: "Invalid Species"
+  # Returned when a Pokémon has no moves registered.
+  no-moves: "No Moves"
+
+shiny:
+  # Symbol or text appended / returned when a Pokémon is shiny.
+  # Common choices: "✦"  "★"  "[Shiny]"  "✨"
+  symbol: "✦"
+  # Text returned when a Pokémon is NOT shiny (leave empty for blank).
+  not-shiny: ""
+
+ivs:
+  # Number of decimal places shown in ivs_percent placeholder (0 = whole number).
+  decimal-places: 0
+
+pokedex:
+  # Number of decimal places in caught_percent placeholder.
+  percent-decimal-places: 0

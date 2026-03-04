@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'io.github.goooler.shadow' version '8.1.8' apply false
+    id 'io.papermc.paperweight.userdev' version '1.7.1'
+}
+
+apply plugin: "io.github.goooler.shadow"
+
+group = pluginGroup
+version = pluginVersion
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(javaVersion.toString().toInteger())
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    // Paper API (includes Bukkit/Spigot API)
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+
+    // PlaceholderAPI
+    maven {
+        name = 'placeholderapi'
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+
+    // Cobblemon
+    maven {
+        name = 'cobblemon-releases'
+        url = 'https://maven.impactdev.net/repository/development/'
+    }
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+}
+
+dependencies {
+    // Paper API mapped using paperweight
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+
+    // Kotlin StdLib (required for compiling against Cobblemon Fabric traits)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
+
+    // PlaceholderAPI
+    compileOnly "me.clip:placeholderapi:${papiVersion}"
+
+    // Cobblemon core (using modrinth versioning system if needed)
+    compileOnly "maven.modrinth:cobblemon:${cobblemonVersion.split('\\+')[0]}"
+}
+
+processResources {
+    // Inject version into plugin.yml at build time
+    inputs.properties version: project.version
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand version: project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = javaVersion.toString().toInteger()
+}
+
+shadowJar {
+    archiveClassifier = ''          // No "-all" suffix — clean jar name
+    archiveBaseName   = rootProject.name
+    minimize()
+}
+
+build.dependsOn shadowJar
